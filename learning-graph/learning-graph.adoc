@@ -16,7 +16,7 @@ The main use case explored here is how to learn Spring Data Neo4j (SDN) in a str
 * Concept: orange
 * Resources: blue-ish (Book, Tutorial, Manual)
 
-=== The graph at the beginning
+=== The initial graph
 
 image::https://raw.github.com/jotomo/neo4j-gist-challenge/master/learning-graph/learning-graph-start.png[]
 
