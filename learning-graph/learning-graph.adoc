@@ -18,7 +18,7 @@ The main use case explored here is how to learn Spring Data Neo4j (SDN) in a str
 
 === The graph at the beginning
 
-image::https://github.com/jotomo/neo4j-gist-challenge/raw/master/learnng-graph/learning-graph-start.png[]
+image::https://raw.github.com/jotomo/neo4j-gist-challenge/master/learning-graph/learning-graph-start.png[]
 
 //hide
 //setup
@@ -144,7 +144,7 @@ Additionally, while learning about SDN, an _Evaluation_ of the modes was done an
 
 The graph would then look like this (new nodes are displayed with an ellipse shape)
 
-image::https://github.com/jotomo/neo4j-gist-challenge/raw/master/learnng-graph/learning-graph-end.png[]
+image::https://raw.github.com/jotomo/neo4j-gist-challenge/master/learning-graph/learning-graph-end.png[]
 
 Even further, an evaluation of the modes depends on whether an embedded database or a remote database is used, which should be decided on a per-project basis. So the project could be modeled in the graph too, get connected to the evaluation node and then, of course, get connected to the technologies the project uses. Then we can ask the graph further questions, like "Which projects has the Java Developer worked on and which technologies has he used during?". As this example is about learning, modeling projects is out of scope and hence omitted.
 
