@@ -1,12 +1,6 @@
 = Learning Graph
 
-This graph is used to visualize the knowledge a person has in a certain area. 
-In this example, the knowledge a Java developer has over a stack of technologies.
-The purpose is to document acquired knowledge and also to help to further educate oneself in a structured way.
-This is accomplished by graphing dependencies between technologies as well as resources that can be used to learn a technology
-and to determine possible 'learning paths' through the graph, which show a way to learn a specific technology, by first
-learning the technologies, in order, which are prerequisites for the desired technology.
-This graph is meant not to be static, but updated as new connections between technologies are discovered and new knowledge is aquired.
+This graph is used to visualize the knowledge a person has in a certain area. In this example, the knowledge a Java developer has over a stack of technologies. The purpose is to document acquired knowledge and to help to further educate oneself in a structured way. This is accomplished by graphing dependencies between technologies as well as resources that can be used to learn a technology and to determine possible 'learning paths' through the graph, which show a way to learn a specific technology, by first learning the technologies, in order, which are prerequisites for the technology to be learned. The graph is meant not to be static, but updated as new connections between technologies are discovered and new knowledge is aquired.
 
 The main use case explored here is how to learn Spring Data Neo4j (SDN) in a structured manner.
 
@@ -81,7 +75,7 @@ CREATE
 
 Lets see what can be done this with data ...
 
-=== What prior knowledge is required before learning Spring Data Neo4j?
+=== What prior knowledge is recommended before learning Spring Data Neo4j?
 [source,cypher]
 ----
 START sdn=node:node_auto_index(name="Spring Data Neo4j")
@@ -110,7 +104,7 @@ RETURN tech.name AS `Technology or concept`
 //table
 
 == Which resources can be used to get an overview of the technologies?
-This query favors resources with a _basic_ (or beginner) level to allow to quickly learn about the technologies, what they consist of, how much time they might need to learn etc, without going too much into detail of actually using the technology.
+This query favors resources with a _basic_ (or beginner) level to allow to quickly learn about the technologies, what they consist of, how much time they might need to learn etc, without going too much into detail or actually using the technology.
 [source,cypher]
 ----
 START sdn=node:node_auto_index(name="Spring Data Neo4j")
@@ -121,9 +115,9 @@ ORDER BY `Steps to SDN` DESC
 ----
 //table
 
-== Add newly acquired knowledge about technology relations to the graph
-Now, having a good overview of the technologies, the understanding - as represented by the graph - can be extended. E.g. it is now known that SDN has two modes and that SDN requires understanding of the Repository Pattern. Furthermore it was learned that Aspect-oriented programming is a concept that is a part of Spring (but not a requirement for Spring, nor SDN, as it is optional).
+Now, having a good overview of the technologies, the understanding - as represented by the graph - can be extended. E.g. it is now known that SDN has two modes and that SDN requires understanding of the Repository Pattern. Furthermore it was learned that Aspect-Oriented Programming is a concept that is a part of Spring (but not a requirement for Spring, nor SDN, as it is optional).
 
+== Add newly acquired knowledge about technology relations to the graph
 [source,cypher]
 ----
 START 
@@ -133,11 +127,11 @@ START
 CREATE
   (sdn)-[:REQUIRES]->(repositoryPattern:Concept {name: "Repository Pattern"}),
   (springDataBook)-[:TEACHES]->(repositoryPattern),
-  (sdn)<-[:PART_OF]-(simpleMode:Tech {name:"Simple Mapping Mode"}),
-  (sdn)<-[:PART_OF]-(advancedMode:Tech {name:"Advanced Mapping Mode"}),
+  (simpleMode:Tech {name:"Simple Mapping Mode"})-[:PART_OF]->(sdn),
+  (advancedMode:Tech {name:"Advanced Mapping Mode"})-[:PART_OF]->(sdn),
   (simpleMode)<-[:ALTERNATIVE_TO]->(advancedMode),
-  (spring)-[:USES]->(aop:Concept {name:"Aspect-Oriented Programming"}),
   (simpleMode)<-[:REJECTED]-(eval:Evaluation {name:"SDN Modes Evaluation"})-[:ACCEPTED]->(advancedMode)
+  (spring)-[:USES]->(aop:Concept {name:"Aspect-Oriented Programming"}),
 ----
 
 Additionally, while learning about SDN, an _Evaluation_ of the modes was done and a decision was made to use the advanced mapping mode, which was documented by the newly created Evaluation node.
@@ -146,21 +140,21 @@ The graph would then look like this (new nodes are displayed with an ellipse sha
 
 image::https://raw.github.com/jotomo/neo4j-gist-challenge/master/learning-graph/learning-graph-end.png[]
 
-Even further, an evaluation of the modes depends on whether an embedded database or a remote database is used, which should be decided on a per-project basis. So the project could be modeled in the graph too, get connected to the evaluation node and then, of course, get connected to the technologies the project uses. Then we can ask the graph further questions, like "Which projects has the Java Developer worked on and which technologies has he used during?". Not only that, but by adding all team members to the graph, required learning for the project could be managed by looking at what each developer already knows, who could learn a needed technology the fastest based on existing knowledge etc.
+Even further, an evaluation of the modes depends on whether an embedded database or a remote database is used, which should be decided on a per-project basis. So the project could be modeled in the graph too, get connected to the evaluation node and then, of course, get connected to the technologies the project uses. Then we can ask the graph further questions, like "Which projects has the Java Developer worked on and which technologies has he used during?". Not only that, but by adding all team members to the graph, required learning for the project could be managed by looking at what each developer knows already, who could learn a needed technology the fastest based on existing knowledge etc.
 As this example is about learning, modeling projects and teams is something for another example.
 
 Coming back to what was just learned, the fact that Spring uses Aspect-Oriented Programming was learned rather by accident, through a Google search. There is no resource to learn Spring in the graph! This can't be good. Are there any more cases like this??
 [source,cypher]
 ----
 START tech=node(*) 
-MATCH (tech)<-[r?:TEACHES]-(resource)
+MATCH (techOrConcept)<-[r?:TEACHES]-(resource)
 WHERE r is null AND (tech:Tech OR tech:Concept)  
-RETURN tech.name as Technology
+RETURN techOrConcept.name AS `Technology or Concept`
 ----
 //table
-There is indeed, no resource for learning Spring. Nor for Dependency Injection or SDNs modes. That's okay for the Java Developer though, as he knows Dependency Injection, and the modes are a part of SDN, so they're explained in the Spring Data book. For Spring itself, the developer should look for a suitable book and add it to the graph. A book on Spring would also touch on Aspect-Oriented Programming and either explain it, or reference other resources that could be used to learn it.
+There is indeed no resource for learning Spring. Nor for Dependency Injection or SDNs modes. That's okay for the Java Developer though, as he knows Dependency Injection, and the modes are a part of SDN, so they're explained in the Spring Data book. For Spring itself, the developer should look for a suitable book and add it to the graph. A book on Spring would also touch on Aspect-Oriented Programming and either explain it, or reference other resources that could be used to learn it.
 
-Know that the basics are learned, let's get into SDN properly.
+Now that the basics are learned, let's get into SDN properly.
 
 === What resources are available to the Java Developer to deep-dive Spring Data Neo4j and required technologies and concepts, skipping what he already knows?
 [source,cypher]
@@ -186,8 +180,7 @@ RETURN tech.name AS Technology,(2013 - understands.since) AS `Years of experienc
 
 Seems like the Spring Expert should know what he's talking about.
 
-Note that Dependency Injection is something the Spring Expert understands to, but it's a Concept, not a Technology and this query was restricted to nodes with a Technology label.
-
+Note that Dependency Injection is something the Spring Expert understands too, but it's a Concept, not a Technology and this query was restricted to nodes with a Technology label.
 
 === Who can be asked for help on a specific technology?
 [source,cypher]
@@ -197,7 +190,7 @@ RETURN tech.name AS Technology, collect(DISTINCT person.name) AS Person
 ----
 //table
 
-The above query is more general and not asked from the standpoint of the Java Developer, so he's listed too. Though this query only makes sense when extending the graph to include more developers and experts.
+The above query is more general and not asked from the standpoint of the Java Developer, so he's listed too. This query hints at what can be done when extending the graph to include more developers and experts.
 
 Finally, a query for the Java Developer who wants to understand what he's doing properly.
 
@@ -211,9 +204,9 @@ RETURN technology.name as Technology, resource.name AS Resource
 ----
 //table
 
-=== Fin
+=== The end
 
-With a bigger graph - maybe when graphing the knowledge of several team members of a project - new possibilities arise: it could become possible to run queries to find 'enabler nodes', which are a prerequisite for multiple technologies and would therefore be well suited to broaden one's understanding and knowledge.
+With a bigger graph - when graphing the knowledge of several team members of a project, as previously hinted at - new possibilities arise: it could become possible to run queries to find 'enabler nodes', which are a prerequisite for multiple technologies and would therefore be well suited to broaden one's understanding and knowledge. The graph would then basically be (the backend) for a learning recommendation engine. Albeit a simple one at this point.
 
 === Console to play around with the graph
 //console
