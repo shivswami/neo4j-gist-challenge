@@ -146,9 +146,9 @@ As this example is about learning, modeling projects and teams is something for 
 Coming back to what was just learned, the fact that Spring uses Aspect-Oriented Programming was learned rather by accident, through a Google search. There is no resource to learn Spring in the graph! This can't be good. Are there any more cases like this??
 [source,cypher]
 ----
-START tech=node(*) 
+START techOrConcept=node(*) 
 MATCH (techOrConcept)<-[r?:TEACHES]-(resource)
-WHERE r is null AND (tech:Tech OR tech:Concept)  
+WHERE r is null AND (techOrConcept:Tech OR techOrConcept:Concept)  
 RETURN techOrConcept.name AS `Technology or Concept`
 ----
 //table
