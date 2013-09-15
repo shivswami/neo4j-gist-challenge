@@ -149,7 +149,7 @@ Coming back to what was just learned, the fact that Spring uses Aspect-Oriented 
 START techOrConcept=node(*) 
 MATCH (techOrConcept)<-[r?:TEACHES]-(resource)
 WHERE r is null AND (techOrConcept:Tech OR techOrConcept:Concept)  
-RETURN techOrConcept.name AS `Technology or Concept`
+RETURN techOrConcept.name AS `Technology or concept`
 ----
 //table
 There is indeed no resource for learning Spring. Nor for Dependency Injection or SDNs modes. That's okay for the Java Developer though, as he knows Dependency Injection, and the modes are a part of SDN, so they're explained in the Spring Data book. For Spring itself, the developer should look for a suitable book and add it to the graph. A book on Spring would also touch on Aspect-Oriented Programming and either explain it, or reference other resources that could be used to learn it.
