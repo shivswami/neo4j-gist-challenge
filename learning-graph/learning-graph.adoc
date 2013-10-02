@@ -131,7 +131,7 @@ CREATE
   (advancedMode:Tech {name:"Advanced Mapping Mode"})-[:PART_OF]->(sdn),
   (simpleMode)<-[:ALTERNATIVE_TO]->(advancedMode),
   (simpleMode)<-[:REJECTED]-(eval:Evaluation {name:"SDN Modes Evaluation"})-[:ACCEPTED]->(advancedMode),
-  (spring)-[:USES]->(aop:Concept {name:"Aspect-Oriented Programming"})
+  (spring)-[:PART_OF]->(aop:Concept {name:"Aspect-Oriented Programming"})
 ----
 
 Additionally, while learning about SDN, an _Evaluation_ of the modes was done and a decision was made to use the advanced mapping mode, which was documented by the newly created Evaluation node.
