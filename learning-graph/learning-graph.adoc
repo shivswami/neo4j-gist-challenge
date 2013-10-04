@@ -78,8 +78,8 @@ Lets see what can be done this with data ...
 === What prior knowledge is recommended before learning Spring Data Neo4j?
 [source,cypher]
 ----
-START sdn=node:node_auto_index(name="Spring Data Neo4j")
-MATCH p=(sdn)-[:REQUIRES*]->(required) 
+MATCH (sdn:Tech), p=(sdn)-[:REQUIRES*]->(required)
+WHERE sdn.name="Spring Data Neo4j"
 RETURN last(p).name AS `Technology or concept`, length(p) AS `Steps to SDN` 
 ORDER BY `Steps to SDN` DESC
 ----
@@ -89,7 +89,7 @@ ORDER BY `Steps to SDN` DESC
 //hide
 [source,cypher]
 ----
-MATCH p=(sdn)-[:REQUIRES*]->(required)   
+MATCH p=(sdn)-[:REQUIRES*]->(required)
 RETURN p AS possiblePath
 ----
 //graph
@@ -97,8 +97,8 @@ RETURN p AS possiblePath
 === What does the Java Developer know already?
 [source,cypher]
 ----
-START javaDev=node:node_auto_index(name="Java Developer") 
-MATCH (javaDev)-[:UNDERSTANDS]->(tech) 
+MATCH (javaDev:Person), (javaDev)-[:UNDERSTANDS]->(tech)
+WHERE javaDev.name="Java Developer"
 RETURN tech.name AS `Technology or concept`
 ----
 //table
@@ -107,9 +107,9 @@ RETURN tech.name AS `Technology or concept`
 This query favors resources with a _basic_ (or beginner) level to allow to quickly learn about the technologies, what they consist of, how much time they might need to learn etc, without going too much into detail or actually using the technology.
 [source,cypher]
 ----
-START sdn=node:node_auto_index(name="Spring Data Neo4j")
-MATCH p=(sdn)-[:REQUIRES*0..]->(technology:Tech)<-[teaches:TEACHES]-(resource)
-WHERE not(has(teaches.level)) OR teaches.level = "BASIC"
+MATCH (sdn:Tech), p=(sdn)-[:REQUIRES*0..]->(technology:Tech)<-[teaches:TEACHES]-(resource)
+WHERE sdn.name="Spring Data Neo4j" AND
+      (not(has(teaches.level)) OR teaches.level = "BASIC")
 RETURN collect(resource.name) AS Resource, technology.name AS Technology, length(p) AS `Steps to SDN` 
 ORDER BY `Steps to SDN` DESC
 ----
@@ -172,8 +172,8 @@ While learning, is there anybody that can be asked for help, how about the Sprin
 === How many years of experience does the Spring Expert have with each technology?
 [source,cypher]
 ----
-START expert=node:node_auto_index(name="Spring Expert") 
-MATCH (expert)-[understands:UNDERSTANDS]->(tech:Tech) 
+MATCH (expert:Person), (expert)-[understands:UNDERSTANDS]->(tech:Tech)
+WHERE expert.name="Spring Expert"
 RETURN tech.name AS Technology,(2013 - understands.since) AS `Years of experience`
 ----
 //table
@@ -197,9 +197,9 @@ Finally, a query for the Java Developer who wants to understand what he's doing 
 === What resources are available to the Java Developer to master existing skills?
 [source,cypher]
 ----
-START javaDev=node:node_auto_index(name="Java Developer")
-MATCH (javaDev)-[:UNDERSTANDS]->(technology:Tech)<-[:TEACHES]-(resource)
-WHERE resource.level = "ADVANCED"
+MATCH (javaDev:Person), (javaDev)-[:UNDERSTANDS]->(technology:Tech)<-[:TEACHES]-(resource)
+WHERE javaDev.name="Java Developer" AND
+      resource.level = "ADVANCED"
 RETURN technology.name as Technology, resource.name AS Resource
 ----
 //table
