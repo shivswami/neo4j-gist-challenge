@@ -204,7 +204,7 @@ RETURN technology.name as Technology, resource.name AS Resource
 ----
 //table
 
-=== The end
+=== Further possibilities
 
 With a bigger graph - when graphing the knowledge of several team members of a project, as previously hinted at - new possibilities arise: it could become possible to run queries to find 'enabler nodes', which are a prerequisite for multiple technologies and would therefore be well suited to broaden one's understanding and knowledge. The graph would then basically be (the backend) for a learning recommendation engine. Albeit a simple one at this point.
 
@@ -212,3 +212,5 @@ With a bigger graph - when graphing the knowledge of several team members of a p
 //console
 
 //graph
+
+The sources asciidoc, graphml) of this Gist are available https://github.com/jotomo/neo4j-gist-challenge[here].
