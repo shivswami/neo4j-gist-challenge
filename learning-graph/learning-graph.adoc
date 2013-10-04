@@ -213,4 +213,4 @@ With a bigger graph - when graphing the knowledge of several team members of a p
 
 //graph
 
-The sources asciidoc, graphml) of this Gist are available https://github.com/jotomo/neo4j-gist-challenge[here].
+The sources (asciidoc, graphml) of this Gist are available https://github.com/jotomo/neo4j-gist-challenge[here].
