@@ -174,7 +174,7 @@ While learning, is there anybody that can be asked for help, how about the Sprin
 ----
 MATCH (expert:Person), (expert)-[understands:UNDERSTANDS]->(tech:Tech)
 WHERE expert.name="Spring Expert"
-RETURN tech.name AS Technology,(2013 - understands.since) AS `Years of experience`
+RETURN tech.name AS Technology, (2013 - understands.since) AS `Years of experience`
 ----
 //table
 
