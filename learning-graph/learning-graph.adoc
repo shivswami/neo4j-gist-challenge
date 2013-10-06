@@ -120,13 +120,13 @@ Now, having a good overview of the technologies, the understanding - as represen
 == Add newly acquired knowledge about technology relations to the graph
 [source,cypher]
 ----
-START 
-  spring=node:node_auto_index(name="Spring"), 
-  sdn=node:node_auto_index(name="Spring Data Neo4j"), 
-  springDataBook=node:node_auto_index(name="Spring Data")
+MATCH (sdn:Tech), (springData:Book), (spring:Tech)
+WHERE sdn.name = "Spring Data Neo4j"
+  AND springData.name = "Spring Data"
+  AND spring.name = "Spring"
 CREATE
   (sdn)-[:REQUIRES]->(repositoryPattern:Concept {name: "Repository Pattern"}),
-  (springDataBook)-[:TEACHES]->(repositoryPattern),
+  (springData)-[:TEACHES]->(repositoryPattern),
   (simpleMode:Tech {name:"Simple Mapping Mode"})-[:PART_OF]->(sdn),
   (advancedMode:Tech {name:"Advanced Mapping Mode"})-[:PART_OF]->(sdn),
   (simpleMode)<-[:ALTERNATIVE_TO]->(advancedMode),
