@@ -159,11 +159,11 @@ Now that the basics are learned, let's get into SDN properly.
 === What resources are available to the Java Developer to deep-dive Spring Data Neo4j and required technologies and concepts, skipping what he already knows?
 [source,cypher]
 ----
-START sdn=node:node_auto_index(name="Spring Data Neo4j"),
-      javaDev=node:node_auto_index(name="Java Developer")
-MATCH p=(sdn)-[:REQUIRES*0..]->(technologyOrConcept)<-[teaches:TEACHES]-(resource)
-WHERE NOT( (javaDev)-[:UNDERSTANDS]->(technologyOrConcept) ) OR teaches.level <> 'BASIC'
-RETURN technologyOrConcept.name AS `Technology or concept`, collect(DISTINCT resource.name) AS Resource
+MATCH (sdn:Tech)-[:REQUIRES*0..]->(technologyOrConcept)<-[teaches:TEACHES]-(resource),
+      (javaDev:Person) 
+WHERE sdn.name="Spring Data Neo4j" AND javaDev.name = 'Java Developer' 
+      AND (NOT (javaDev)-[:UNDERSTANDS]->(technologyOrConcept) OR teaches.level <> 'BASIC')
+RETURN technologyOrConcept.name AS `Technology OR concept`, collect(DISTINCT resource.name) AS Resource
 ----
 //table
 
