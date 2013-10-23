@@ -133,7 +133,8 @@ CREATE
   (springData)-[:TEACHES]->(repositoryPattern),
   (simpleMode:Tech {name:"Simple Mapping Mode"})-[:PART_OF]->(sdn),
   (advancedMode:Tech {name:"Advanced Mapping Mode"})-[:PART_OF]->(sdn),
-  (simpleMode)<-[:ALTERNATIVE_TO]->(advancedMode),
+  (simpleMode)-[:ALTERNATIVE_TO]->(advancedMode),
+  (advancedMode)-[:ALTERNATIVE_TO]->(simpleMode),
   (simpleMode)<-[:REJECTED]-(eval:Evaluation {name:"SDN Modes Evaluation"})-[:ACCEPTED]->(advancedMode),
   (spring)-[:PART_OF]->(aop:Concept {name:"Aspect-Oriented Programming"})
 ----
