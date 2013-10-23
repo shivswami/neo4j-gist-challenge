@@ -10,6 +10,10 @@ The main use case explored here is how to learn Spring Data Neo4j (SDN) in a str
 * Concept: orange
 * Resources: blue-ish (Book, Tutorial, Manual)
 
+==== Notes
+* The console is at the bottom of the page, after clicking the 'Play/Edit in console' button, you have to scroll down manually.
+* Graph images have been created with from GraphML edited via and converted to Cypher CREATE statements as describe https://github.com/jotomo/graph-tools[here]
+
 === The initial graph
 
 image::https://raw.github.com/jotomo/neo4j-gist-challenge/master/learning-graph/learning-graph-start.png[]
