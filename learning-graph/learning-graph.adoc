@@ -12,7 +12,7 @@ The main use case explored here is how to learn Spring Data Neo4j (SDN) in a str
 
 ==== Notes
 * The console is at the bottom of the page, after clicking the 'Play/Edit in console' button, you have to scroll down manually.
-* Graph images have been created from GraphML files, edited via Yed and converted to Cypher CREATE statements as described https://github.com/jotomo/graph-tools[here]
+* Graph images have been created from GraphML files, edited and exported from Yed.
 
 === The initial graph
 
