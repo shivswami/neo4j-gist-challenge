@@ -1,4 +1,7 @@
 = Learning Graph
+:neo4j-version: 2.0.0-RC1
+:author: Johannes Mockenhaupt
+:tags: learning, knowledge
 
 This graph is used to visualize the knowledge a person has in a certain area. In this example, the knowledge a Java developer has over a stack of technologies. The purpose is to document acquired knowledge and to help to further educate oneself in a structured way. This is accomplished by graphing dependencies between technologies as well as resources that can be used to learn a technology and to determine possible 'learning paths' through the graph, which show a way to learn a specific technology, by first learning the technologies, in order, which are prerequisites for the technology to be learned. The graph is meant not to be static, but updated as new connections between technologies are discovered and new knowledge is acquired.
 
