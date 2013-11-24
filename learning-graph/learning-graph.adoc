@@ -12,7 +12,7 @@ The main use case explored here is how to learn Spring Data Neo4j (SDN) in a str
 * Person: green
 * Technology: yellow
 * Concept: orange
-* Resources: blue-ish (Book, Tutorial, Manual)
+* Resources: blue
 
 ==== Notes
 * The console is at the bottom of the page, after clicking the 'Play/Edit in console' button, you have to scroll down manually.
