@@ -15,7 +15,7 @@ The main use case explored here is how to learn Spring Data Neo4j (SDN) in a str
 
 ==== Notes
 * The console is at the bottom of the page, after clicking the 'Play/Edit in console' button, you have to scroll down manually.
-* Graph images have been created from GraphML files, edited via Yed and converted to Cypher CREATE statements as described https://github.com/jotomo/graph-tools[here]
+* Graph images have been created from GraphML files, edited and exported from Yed.
 
 === The initial graph
 
@@ -85,7 +85,7 @@ Lets see what can be done this with data ...
 === What prior knowledge is recommended before learning Spring Data Neo4j?
 [source,cypher]
 ----
-MATCH (sdn:Tech {name:"Spring Data Neo4j}), p=(sdn)-[:REQUIRES*]->(required)
+MATCH (sdn:Tech {name:"Spring Data Neo4j"}), p=(sdn)-[:REQUIRES*]->(required)
 RETURN last(p).name AS `Technology or concept`, length(p) AS `Steps to SDN` 
 ORDER BY `Steps to SDN` DESC
 ----
@@ -103,7 +103,7 @@ RETURN p AS possiblePath
 === What does the Java Developer know already?
 [source,cypher]
 ----
-MATCH (javaDev:Person {name:"Java Developer"}), (javaDev)-[:UNDERSTANDS]->(tech)
+MATCH (javaDev:Person {name:"Java Developer"})-[:UNDERSTANDS]->(tech)
 RETURN tech.name AS `Technology or concept`
 ----
 //table
