@@ -1,7 +1,7 @@
 = Learning Graph
 :neo4j-version: 2.0.0-RC1
 :author: Johannes Mockenhaupt
-:tags: learning, knowledge
+:tags: learning, knowledge, dependencies
 
 This graph is used to visualize the knowledge a person has in a certain area. In this example, the knowledge a Java developer has over a stack of technologies. The purpose is to document acquired knowledge and to help to further educate oneself in a structured way. This is accomplished by graphing dependencies between technologies as well as resources that can be used to learn a technology and to determine possible 'learning paths' through the graph, which show a way to learn a specific technology, by first learning the technologies, in order, which are prerequisites for the technology to be learned. The graph is meant not to be static, but updated as new connections between technologies are discovered and new knowledge is acquired.
 
@@ -85,8 +85,7 @@ Lets see what can be done this with data ...
 === What prior knowledge is recommended before learning Spring Data Neo4j?
 [source,cypher]
 ----
-MATCH (sdn:Tech), p=(sdn)-[:REQUIRES*]->(required)
-WHERE sdn.name="Spring Data Neo4j"
+MATCH (sdn:Tech {name:"Spring Data Neo4j"}), p=(sdn)-[:REQUIRES*]->(required)
 RETURN last(p).name AS `Technology or concept`, length(p) AS `Steps to SDN` 
 ORDER BY `Steps to SDN` DESC
 ----
@@ -104,8 +103,7 @@ RETURN p AS possiblePath
 === What does the Java Developer know already?
 [source,cypher]
 ----
-MATCH (javaDev:Person), (javaDev)-[:UNDERSTANDS]->(tech)
-WHERE javaDev.name="Java Developer"
+MATCH (javaDev:Person {name:"Java Developer"})-[:UNDERSTANDS]->(tech)
 RETURN tech.name AS `Technology or concept`
 ----
 //table
@@ -114,10 +112,11 @@ RETURN tech.name AS `Technology or concept`
 This query favors resources with a _basic_ (or beginner) level to allow to quickly learn about the technologies, what they consist of, how much time they might need to learn etc, without going too much into detail or actually using the technology.
 [source,cypher]
 ----
-MATCH (sdn:Tech), p=(sdn)-[:REQUIRES*0..]->(technology:Tech)<-[teaches:TEACHES]-(resource)
-WHERE sdn.name="Spring Data Neo4j" AND
-      (not(has(teaches.level)) OR teaches.level = "BASIC")
-RETURN collect(resource.name) AS Resource, technology.name AS Technology, length(p) AS `Steps to SDN` 
+MATCH (sdn:Tech {name:"Spring Data Neo4j"}), 
+      p=(sdn)-[:REQUIRES*0..]->(technology:Tech)<-[teaches:TEACHES]-(resource)
+WHERE not(has(teaches.level)) OR teaches.level = "BASIC"
+RETURN collect(resource.name) AS Resource, technology.name AS Technology, 
+       length(p) AS `Steps to SDN` 
 ORDER BY `Steps to SDN` DESC
 ----
 //table
@@ -127,10 +126,9 @@ Now, having a good overview of the technologies, the understanding - as represen
 == Add newly acquired knowledge about technology relations to the graph
 [source,cypher]
 ----
-MATCH (sdn:Tech), (springData:Book), (spring:Tech)
-WHERE sdn.name = "Spring Data Neo4j"
-  AND springData.name = "Spring Data"
-  AND spring.name = "Spring"
+MATCH (sdn:Tech {name:"Spring Data Neo4j"}), 
+      (springData:Book {name:"Spring Data"}), 
+      (spring:Tech {name:"Spring"})
 CREATE
   (sdn)-[:REQUIRES]->(repositoryPattern:Concept {name: "Repository Pattern"}),
   (springData)-[:TEACHES]->(repositoryPattern),
@@ -138,7 +136,8 @@ CREATE
   (advancedMode:Tech {name:"Advanced Mapping Mode"})-[:PART_OF]->(sdn),
   (simpleMode)-[:ALTERNATIVE_TO]->(advancedMode),
   (advancedMode)-[:ALTERNATIVE_TO]->(simpleMode),
-  (simpleMode)<-[:REJECTED]-(eval:Evaluation {name:"SDN Modes Evaluation"})-[:ACCEPTED]->(advancedMode),
+  (eval:Evaluation {name:"SDN Modes Evaluation"})-[:REJECTED]->(simpleMode),
+  (eval)-[:ACCEPTED]->(advancedMode),
   (spring)-[:PART_OF]->(aop:Concept {name:"Aspect-Oriented Programming"})
 ----
 
@@ -167,11 +166,12 @@ Now that the basics are learned, let's get into SDN properly.
 === What resources are available to the Java Developer to deep-dive Spring Data Neo4j and required technologies and concepts, skipping what he already knows?
 [source,cypher]
 ----
-MATCH (sdn:Tech)-[:REQUIRES*0..]->(technologyOrConcept)<-[teaches:TEACHES]-(resource),
-      (javaDev:Person) 
-WHERE sdn.name="Spring Data Neo4j" AND javaDev.name = 'Java Developer' 
-      AND (NOT (javaDev)-[:UNDERSTANDS]->(technologyOrConcept) OR teaches.level <> 'BASIC')
-RETURN technologyOrConcept.name AS `Technology OR concept`, collect(DISTINCT resource.name) AS Resource
+MATCH (sdn:Tech {name:"Spring Data Neo4j"})-[:REQUIRES*0..]->(technologyOrConcept)
+      <-[teaches:TEACHES]-(resource),
+      (javaDev:Person {name:"Java Developer"}) 
+WHERE NOT (javaDev)-[:UNDERSTANDS]->(technologyOrConcept) OR teaches.level <> 'BASIC'
+RETURN technologyOrConcept.name AS `Technology OR concept`, 
+       collect(DISTINCT resource.name) AS Resource
 ----
 //table
 
@@ -180,8 +180,7 @@ While learning, is there anybody that can be asked for help, how about the Sprin
 === How many years of experience does the Spring Expert have with each technology?
 [source,cypher]
 ----
-MATCH (expert:Person), (expert)-[understands:UNDERSTANDS]->(tech:Tech)
-WHERE expert.name="Spring Expert"
+MATCH (expert:Person {name:"Spring Expert"}), (expert)-[understands:UNDERSTANDS]->(tech:Tech)
 RETURN tech.name AS Technology, (2013 - understands.since) AS `Years of experience`
 ----
 //table
@@ -205,9 +204,8 @@ Finally, a query for the Java Developer who wants to understand what he's doing 
 === What resources are available to the Java Developer to master existing skills?
 [source,cypher]
 ----
-MATCH (javaDev:Person), (javaDev)-[:UNDERSTANDS]->(technology:Tech)<-[:TEACHES]-(resource)
-WHERE javaDev.name="Java Developer" AND
-      resource.level = "ADVANCED"
+MATCH (javaDev:Person {name:"Java Developer"})-[:UNDERSTANDS]->(technology:Tech)
+      <-[:TEACHES]-(resource {level:"ADVANCED"})
 RETURN technology.name as Technology, resource.name AS Resource
 ----
 //table
