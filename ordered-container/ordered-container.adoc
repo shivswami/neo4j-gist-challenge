@@ -54,8 +54,6 @@ requirement. Also, your existing queries will continue to work without modificat
 //setup
 [source,cypher]
 ----
-MATCH (n)-[r]-(o) WHERE r.createdBy = 'graphml2cypher.py=ordered-container.graphml' DELETE r;
-MATCH (n) WHERE n.createdBy = 'graphml2cypher.py=ordered-container.graphml' DELETE n;
 CREATE
  (`n0`:`Song` {name:'song 1', createdDate:'2013-11-30 16:48:15.667578', createdBy:'graphml2cypher.py=ordered-container.graphml'}),
  (`n1`:`Song` {name:'Song 2', createdDate:'2013-11-30 16:48:15.667607', createdBy:'graphml2cypher.py=ordered-container.graphml'}),
