@@ -1,4 +1,8 @@
 = Ordered Container
+:neo4j-version: 2.0.0-RC1
+:author: Johannes Mockenhaupt
+:twitter: 0x6a6f746f6d6f
+:tags: ordering, containment
 
 Mark Needham - via a http://www.markhneedham.com/blog/2013/11/29/neo4j-modelling-series-of-events[blogpost] 
 made me go back to finish my pondering on how to model an ordered container. By which I basically mean an ordered list in a graph.
