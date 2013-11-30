@@ -1,6 +1,6 @@
 = Ordered Container
 
-Mark Needham - via a (blogpost)[http://www.markhneedham.com/blog/2013/11/29/neo4j-modelling-series-of-events] 
+Mark Needham - via a http://www.markhneedham.com/blog/2013/11/29/neo4j-modelling-series-of-events[blogpost] 
 made me go back to finish my pondering on how to model an ordered container. By which I basically mean an ordered list in a graph.
 Trimming down what he describes to the problem of containment and order, I use the example of songs that 
 are part of an album and part of a playlist, both of which are ordered. Actually, I was modelling that anyway.
@@ -11,7 +11,7 @@ the order are concerns of the album and playlist - the container. So let them ha
 with _position_ properties on the relationships? Awkward and not very pretty to query. So the position, can't be on the song node and 
 it can't be in the relationship ... guess we need more nodes! Let's extract the ordering into separate nodes:
 
-image::https://raw.github.com/jotomo/neo4j-gist-challenge/master/ordered-container/ordered-container.png.png[]
+image::https://raw.github.com/jotomo/neo4j-gist-challenge/master/ordered-container/ordered-container.png[]
 
 TODO
 Queries: 
