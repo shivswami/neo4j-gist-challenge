@@ -9,7 +9,7 @@ made me go back to finish my pondering on how to model an ordered container. By 
 Trimming down what he describes to the problem of containment and order, I use the example of songs that 
 are part of an album and part of a playlist, both of which are ordered. Actually, I was modeling that anyway.
 So just doing the old _NEXT_ relationships on songs to order them won't work, since the unanswered question would 
-be "who's _NEXT_ is it anyway?".
+be "who's _NEXT_ is it anyway?". The album's, the playlist's? Or from another container that will be added in the future? 
 
 But why should the _NEXT_ relationship go on the song in the first place? The song doesn't care. Both the containment and 
 the order are concerns of the album and playlist - the containers. So let them handle it. But how? Have _HAS_ relationships from
