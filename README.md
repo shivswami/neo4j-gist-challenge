@@ -9,4 +9,6 @@ View the [Learning Graph](http://gist.neo4j.org/?github-jotomo%2Fneo4j-gist-chal
 which made [the second place](http://blog.neo4j.org/2013/10/the-first-graphgist-challenge-completed.html)
 , yay! :-)
 
-This repository now also contains other gists, unrelated to a challenge.
+Just Gists
+==========
+This repository now also contains other gists, unrelated to the challenge. Starting with [Ordered Container](http://gist.neo4j.org/?github-jotomo/neo4j-gist-challenge//ordered-container/ordered-container.adoc)
