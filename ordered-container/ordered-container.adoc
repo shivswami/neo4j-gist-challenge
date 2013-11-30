@@ -18,10 +18,28 @@ separate nodes:
 
 image::https://raw.github.com/jotomo/neo4j-gist-challenge/master/ordered-container/ordered-container.png[]
 
+Let's have  'container in a container' example. First the usual node with _HAS_ relationships - the containment part.
+Simple and pretty standard.
+
+image::https://raw.github.com/jotomo/neo4j-gist-challenge/master/ordered-container/who1.png[]
+
+Now let's add odering. 
+
+image::https://raw.github.com/jotomo/neo4j-gist-challenge/master/ordered-container/who2.png[]
+
+The nice thing is that it is simple added, so this is a way to evolve your graph if ordering becomes a requirement.
+Being only adding, no existing structure is changed and thus all your queries continue to function.
+
+
+ NOTES
+
 The container now groups and orderes it's items, referencing the songs, which are unimpressed by all that, as they needn't now about
 any containers.
 This way, a collection may also itself be an item in another collection, say you have your playlists and now you turn DJ and
 put your vinyl records (old school baby!) into crates. Now you create 'crate' containers which contain playlist containers. Neat. 
+
+3 nicely separates containment and ordering, to allow to easily add ordering to an existing container if needed. As well as 
+making queries for containment simple.
 
 TODO
 Queries: 
@@ -30,6 +48,9 @@ Queries:
 - insert item => steal from manual (linked list)
 
 TODO nice showcase for using (multiple) labels: album => Album:Container, no?
+
+DON'T query (container)-[:FIRST*|NEXT*]-> falls if container contains another container
+  does FIRST|NEXT* work? or does it have to be ()-[:FIRST]-(first)-[:NEXT]-(next) return f, n => try it!
 
 So, what do you think? 
 
