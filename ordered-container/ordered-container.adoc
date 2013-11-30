@@ -12,7 +12,7 @@ So just doing the old _NEXT_ relationships on songs to order them won't work, si
 be "who's _NEXT_ is it anyway?".
 
 But why should the _NEXT_ relationship go on the song in the first place? The song doesn't care. Both the containment and 
-the order are concerns of the album and playlist - the containers. So let them handle it. But how? Have HAS relationships from
+the order are concerns of the album and playlist - the containers. So let them handle it. But how? Have _HAS_ relationships from
 the container to the songs with _position_ properties on the relationships? Awkward and not very pretty to query. Nor very graphy.
 So the position can't be on the song node and it can't be in the relationship ... guess we need more nodes! Let's extract the 
 ordering into separate nodes:
@@ -112,9 +112,11 @@ requirement. Also, your existing queries will continue to work without modificat
 
 = Summary
 
-Now there are songs, which can be part of anything, without having to care about it (but being able, queyring all 
-incoming _VALUE_ relationships shows which containers a song is part of), there are also the containers taking care
-of containment and also having (optional) ordering. All cleanly separated.  
+Now there are songs, which can be part of anything, without having to care about it (but being able to query all 
+incoming _VALUE_ relationships to determine which containers a song is part of), there are also the containers taking care
+of containment and also having (optional) ordering. All cleanly separated and relatively easily queryable.  
+
+Working with Cypher on linked lists (which the ordering is) is described in the http://docs.neo4j.org/chunked/milestone/cypherdoc-linked-lists.html[manual]
 
 I'm not sure about the naming, esp. the relationship names, e.g. would _CONTAINS_ be better than _HAS_, and would _ORDER_ be
 clearer than _FIRST_? What do you think?
