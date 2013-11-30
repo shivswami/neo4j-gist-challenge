@@ -8,13 +8,14 @@ Mark Needham - via an interesting http://www.markhneedham.com/blog/2013/11/29/ne
 made me go back to finish my pondering on how to model an ordered container. By which I basically mean an ordered list in a graph.
 Trimming down what he describes to the problem of containment and order, I use the example of songs that 
 are part of an album and part of a playlist, both of which are ordered. Actually, I was modeling that anyway.
-So just doing the old _NEXT_ relationships on songs won't work, since the unanswered question would be "who's _NEXT_ is it anyway?".
+So just doing the old _NEXT_ relationships on songs to order them won't work, since the unanswered question would 
+be "who's _NEXT_ is it anyway?".
 
 But why should the _NEXT_ relationship go on the song in the first place? The song doesn't care. Both the containment and 
-the order are concerns of the album and playlist - the container. So let them handle it. But how? Have _CONTAINS_ relationships from
-the container to the songs with _position_ properties on the relationships? Awkward and not very pretty to query. So the position, 
-can't be on the song node and it can't be in the relationship ... guess we need more nodes! Let's extract the ordering into 
-separate nodes:
+the order are concerns of the album and playlist - the containers. So let them handle it. But how? Have HAS relationships from
+the container to the songs with _position_ properties on the relationships? Awkward and not very pretty to query. Nor very graphy.
+So the position can't be on the song node and it can't be in the relationship ... guess we need more nodes! Let's extract the 
+ordering into separate nodes:
 
 image::https://raw.github.com/jotomo/neo4j-gist-challenge/master/ordered-container/ordered-container.png[]
 
@@ -23,31 +24,6 @@ image::https://raw.github.com/jotomo/neo4j-gist-challenge/master/ordered-contain
 We can now fetch all songs, properly ordered, by traversing from the container via the _FIRST_ relationship, continue
 with the _NEXT_ relationship to obtain all _items_ and finally, via the _VALUE_ relationship we can fetch the ordered
 songs.
-This is however cumbersome if all you want are the songs, disregarding ordering, which should be easy to achieve.
-
-== Variant 2
-
-This adds _HAS_ relationships so that traversing all outgoing _HAS_ and then all _VALUE_ relationships returns the songs.
-But still this makes it necessary to be aware of ordering when all that is wanted is to get the songs.
-
-== Variant 3
-
-The _HAS_ relationship now runs from the container directly to the songs. This is a surprisingly elegant solution that 
-evolved, as now containment and ordering are separated. Queries for containment are now a simple _HAS_ relationship away,
-while fetching the songs in an ordered fashion is still possible like done in Variant 1. 
-
-= Nesting
-
-Let's have  'container in a container' example using the good old Dr. Who series. First the usual node with _HAS_ relationships
- - the containment part. Simple and pretty standard.
-
-image::https://raw.github.com/jotomo/neo4j-gist-challenge/master/ordered-container/who1.png[]
-
-Now let's add ordering. 
-
-image::https://raw.github.com/jotomo/neo4j-gist-challenge/master/ordered-container/who2.png[]
-The nice thing is that it is simply added to an existing structure, so this is a way to evolve your graph if ordering becomes a 
-requirement. Also, your existing queries will continue to work without modification.
 
 //hide
 //setup
@@ -106,27 +82,32 @@ RETURN song.name
 ----
 //table
 
+This is however cumbersome if - for different queries - all you want are the songs, disregarding ordering, which should 
+be easy to achieve.
 
- NOTES
+== Variant 2
 
-The container now groups and orderes it's items, referencing the songs, which are unimpressed by all that, as they needn't now about
-any containers.
-This way, a collection may also itself be an item in another collection, say you have your playlists and now you turn DJ and
-put your vinyl records (old school baby!) into crates. Now you create 'crate' containers which contain playlist containers. Neat. 
+This adds _HAS_ relationships so that traversing all outgoing _HAS_ and then all _VALUE_ relationships returns the songs.
+But still this makes it necessary to be aware of ordering when all that is wanted is to get the songs.
 
-3 nicely separates containment and ordering, to allow to easily add ordering to an existing container if needed. As well as 
-making queries for containment simple.
+== Variant 3
 
-TODO
-Queries: 
-- number of items in album/pl
-- get records of album/pl
-- insert item => steal from manual (linked list)
+The _HAS_ relationship now runs from the container directly to the songs. This is a surprisingly elegant solution that 
+evolved, as now containment and ordering are separated. Queries for containment are now a simple _HAS_ relationship away,
+while fetching the songs in an ordered fashion is still possible like done in Variant 1. 
 
-TODO nice showcase for using (multiple) labels: album => Album:Container, no?
+= Nesting
 
-DON'T query (container)-[:FIRST*|NEXT*]-> falls if container contains another container
-  does FIRST|NEXT* work? or does it have to be ()-[:FIRST]-(first)-[:NEXT]-(next) return f, n => try it!
+Let's have  'container in a container' example using the good old Dr. Who series. First the usual node with _HAS_ relationships
+ - the containment part. Simple and pretty standard.
+
+image::https://raw.github.com/jotomo/neo4j-gist-challenge/master/ordered-container/who1.png[]
+
+Now let's add ordering. 
+
+image::https://raw.github.com/jotomo/neo4j-gist-challenge/master/ordered-container/who2.png[]
+The nice thing is that it is simply added to an existing structure, so this is a way to evolve your graph if ordering becomes a 
+requirement. Also, your existing queries will continue to work without modification.
 
 So, what do you think? 
 
