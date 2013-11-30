@@ -47,7 +47,6 @@ Now let's add ordering.
 
 image::https://raw.github.com/jotomo/neo4j-gist-challenge/master/ordered-container/who2.png[]
 The nice thing is that it is simply added to an existing structure, so this is a way to evolve your graph if ordering becomes a 
-
 requirement. Also, your existing queries will continue to work without modification.
 
 //hide
@@ -102,8 +101,7 @@ CREATE
 === Query Playlist2 for all ordered songs
 [source,cypher]
 ----
-MATCH (n:Playlist {name:"playlist2"})-[:FIRST]->(first),
-      (first)-[:NEXT*0..]->(item)-[:VALUE]->(song) 
+MATCH (n:Playlist {name:"playlist2"})-[:FIRST]->(first)-[:NEXT*0..]->(item)-[:VALUE]->(song) 
 RETURN song.name
 ----
 //table
