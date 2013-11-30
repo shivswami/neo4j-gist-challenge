@@ -29,6 +29,7 @@ songs.
 //setup
 [source,cypher]
 ----
+CREATE
  (`n0`:`Song` {createdBy:'graphml2cypher.py=ordered-container.graphml', createdDate:'2013-11-30 17:24:11.136280', name:'Song 1'}),
  (`n1`:`Song` {createdBy:'graphml2cypher.py=ordered-container.graphml', createdDate:'2013-11-30 17:24:11.136311', name:'Song 2'}),
  (`n2`:`Song` {createdBy:'graphml2cypher.py=ordered-container.graphml', createdDate:'2013-11-30 17:24:11.136329', name:'Song 3'}),
