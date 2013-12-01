@@ -103,7 +103,7 @@ Let's have  'container in a container' example using the good old Dr. Who series
 
 image::https://raw.github.com/jotomo/neo4j-gist-challenge/master/ordered-container/who1.png[]
 
-Now let's add ordering. 
+Now let's add ordering. Note how the _NEXT_ relationships are unambiguous now, without any _position_ property tricks:
 
 image::https://raw.github.com/jotomo/neo4j-gist-challenge/master/ordered-container/who2.png[]
 
