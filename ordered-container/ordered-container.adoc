@@ -123,7 +123,7 @@ linked lists (which the ordering nodes are).
 I'm not sure about the naming, esp. the relationship names, e.g. would _CONTAINS_ be better than _HAS_, and would _ORDER_ be
 clearer than _FIRST_? What do you think?
 
-I haven't added much queries here, as they should be fairly simple, but if you want to practice a bit (maybe for the upcoming December
+I haven't added many queries here, as they should be fairly simple, but if you want to practice a bit (maybe for the upcoming December
 GraphGist challenge?) feel free to fork https://github.com/jotomo/neo4j-gist-challenge[this] and open a pull request on GitHub!
 
 P.S. I think I'll just discard the idea of picking up blogging again and I'll just create GraphGists instead - this is more fun! :-)
