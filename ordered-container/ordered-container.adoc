@@ -113,7 +113,7 @@ requirement. Also, your existing queries will continue to work without modificat
 = Summary
 
 Now there are songs, which can be part of anything, without having to care about it (but being able to query all 
-incoming _VALUE_ relationships to determine which containers a song is part of) while the _NEXT_ relationships are
+incoming _HAS relationships to determine which containers a song is part of) while the _NEXT_ relationships are
 unambiguous now. There are also the containers taking care of containment, and there are the (optional) ordering nodes. 
 All cleanly separated and relatively easily queryable.  
 
